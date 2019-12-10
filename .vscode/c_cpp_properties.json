@@ -1,0 +1,39 @@
+{
+    "configurations": [
+        {
+            "name": "Mac",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/usr⁩/local⁩/Cellar⁩/qt⁩/5.13.1⁩/lib/",
+                "/usr⁩/local⁩/Cellar⁩/qt⁩/5.13.1⁩/lib/QtWidgets.framework/Versions/5/Headers",
+                "/usr⁩/local⁩/Cellar⁩/qt⁩/5.13.1⁩/lib/QtCore.framework/Versions/5/Headers",
+                "/usr⁩/local⁩/Cellar⁩/qt⁩/5.13.1⁩/lib/QtQml.framework/Versions/5/Headers",
+                "/usr⁩/local⁩/Cellar⁩/qt⁩/5.13.1⁩/lib/QtGui.framework/Versions/5/Headers",
+                "/usr/local/Cellar/qt/5.13.1/lib/QtWidgets.framework/Versions/5/Headers",
+                "/usr/local/Cellar/qt/5.13.1/lib/QtCore.framework/Versions/5/Headers",
+                "/usr/local/Cellar/qt/5.13.1/lib/QtPainter.framework/Versions/5/Headers",
+                "/usr/local/Cellar/qt/5.13.1/lib/QtQuick.framework/Versions/5/Headers"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/g++",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "${default}"
+        },
+        {
+            "name": "what",
+            "includePath": [
+                "${workspaceFolder}/**"
+            ],
+            "defines": [],
+            "macFrameworkPath": [
+                "/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks"
+            ],
+            "compilerPath": "/usr/bin/clang",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "clang-x64"
+        }
+    ],
+    "version": 4
+}
