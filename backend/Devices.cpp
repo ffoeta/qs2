@@ -14,7 +14,10 @@ float Device::nextEvent()
 void Device::takePackage(Package * package)
 {
     this -> package_ = package;
-    next_event_ = this -> package_ ->on_device_ + fx();
+
+    this -> package_ ->left_ = package_  -> on_device_ + fx();
+    
+    next_event_ = this -> package_ ->left_;
 };
 
 Package * Device::sendPackage()
@@ -111,7 +114,6 @@ float Devices::nextEvent()
     
     for (auto it = this -> devices_.begin(); it != this -> devices_.end(); it++ )
     {
-        std::cout << it -> nextEvent() << " ";
         if (it -> nextEvent() < nextEvent) 
         {
             nextEvent = it -> nextEvent();

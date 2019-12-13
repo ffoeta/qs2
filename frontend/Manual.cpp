@@ -30,33 +30,11 @@ Manual::Manual(Superviser * superviser, Interface * father) :
 void Manual::__RUN__()
 {   
     this -> superviser_ -> run();
-    
-    auto sources = this -> superviser_ -> getSource();
-    auto buffers = this -> superviser_ -> getBuffer();
-    auto devices = this -> superviser_ -> getDevice();
-
-    std::cout << "PRESSED" << std::endl;
-
-    for (auto it = sources.begin(); it != sources.end(); it++)
-    {
-        std::cout << *it << "  ";
-    }
-    std::cout << std::endl;
-    for (auto it = buffers.begin(); it != buffers.end(); it++)
-    {
-        std::cout << *it << "  ";
-    }
-    std::cout << std::endl;
-    for (auto it = devices.begin(); it != devices.end(); it++)
-    {
-        std::cout << *it << "  ";
-    }
-    std::cout << std::endl;
 }
 
 void Manual::__REBOOT__()
 {
-    std::cout << "DISABLED" << std::endl;
+    this -> superviser_ -> reboot();
 }   
 
 void Manual::__BACK__()

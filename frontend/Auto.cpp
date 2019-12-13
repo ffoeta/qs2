@@ -12,7 +12,6 @@ Auto::Auto(Superviser * superviser, Interface * father) :
     layout->addWidget(this->buttonsHolder_);
 
     this->setLayout(layout);
-
 }
 
 void Auto::init() {
@@ -71,6 +70,7 @@ void Auto::__RUN__() {
     {
         this -> superviser_ -> run();
     }
+    this -> superviser_ -> print();
 }
 
 void Auto::__BACK__() {
@@ -78,5 +78,5 @@ void Auto::__BACK__() {
 }
 
 void Auto::__REBOOT__() {
-    std::cout << "DISABLED" << std::endl;
+    this -> superviser_ -> reboot();
 }

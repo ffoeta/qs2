@@ -8,13 +8,13 @@ Package  *   Buffer::package()
     return this -> package_;
 }
 
-void    Buffer::placeIn(Package * package)
+void    Buffer::recievePackage(Package * package)
 {
     this -> package_ = package;
     this -> n_of_source_ = package -> n_of_source_;
 }
     
-Package    *    Buffer::takeOut()
+Package    *    Buffer::sendPackage()
 {
     Package * temp = this -> package_;
     this -> package_ = nullptr;
@@ -72,11 +72,10 @@ void Buffers::dec()
 void Buffers::getTime(float time)
 {
     this -> time_ = time;
-    std::cout << this -> time_ << "is." << std::endl;
 }
 
 
-void Buffers::placeIn(Package * package)
+void Buffers::recivePackage(Package * package)
 {
     auto temp = this -> current_;
     do
@@ -86,14 +85,17 @@ void Buffers::placeIn(Package * package)
 
     if (current_ == temp)
     {
-        this -> superviser_ -> droppPackage(buffers_.at(current_).takeOut());
+        if (!buffers_.at(current_).empty())
+        {
+            this -> superviser_ -> droppPackage(buffers_.at(current_).sendPackage());
+        }
     }
 
-    buffers_.at(current_).placeIn(package);
+    buffers_.at(current_).recievePackage(package);
     inc();
 }
     
-Package * Buffers::takeOut()
+Package * Buffers::sendPackage()
 {
     int n_of_source = RAND_MAX;
     for (auto it = this -> buffers_.begin(); it != this -> buffers_.end(); it++ )
@@ -111,8 +113,10 @@ Package * Buffers::takeOut()
     {
         inc();
     } while (buffers_.at(current_).getN()  != n_of_source);
-    auto temp = this -> buffers_.at(current_).takeOut();
+
+    auto temp = this -> buffers_.at(current_).sendPackage();
     temp -> on_device_ = this -> time_;
+    
     inc();
     return temp;
 }

@@ -13,9 +13,9 @@ public:
     //  пакет
     Package * package();
     //  получить и распределить пакет
-    void placeIn(Package * package);
+    void recievePackage(Package * package);
     //  отдать пакет
-    Package * takeOut();
+    Package * sendPackage();
     //  пустой ли буфер
     bool empty();
     //  номер источника пакета
@@ -38,9 +38,9 @@ class Buffers
 public:
     Buffers(Base * superviser, int n_of_buffers);
     //  положить заявку
-    void placeIn(Package * package);
+    void recivePackage(Package * package);
     // отдать заявку
-    Package * takeOut();
+    Package * sendPackage();
     //  есть ли в буфере заявки
     bool ready();
     //  заявки в буферах

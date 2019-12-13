@@ -18,7 +18,7 @@ Package * Source::package()
 {
     auto temp = this -> package_;
 
-    next_event_ += this -> fx();
+    next_event_ += this -> fx();    
     this -> package_ = new Package(n_, counter_, next_event_);
 
     return temp;
@@ -59,6 +59,7 @@ Package * Sources::package()
     {
         if (it -> nextEvent() == event)
         {
+            this -> superviser_ -> createdPackage(it ->getN());
             return it -> package();
         }
     }

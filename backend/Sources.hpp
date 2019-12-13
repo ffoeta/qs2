@@ -44,6 +44,8 @@ public:
     //  номер источника
     int getN();
 private:
+    //  заявок создано
+    std::vector<int> counter_;
     // смотритель
     Base * superviser_;
     // кол-во источников
