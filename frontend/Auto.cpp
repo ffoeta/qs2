@@ -6,34 +6,22 @@ Auto::Auto(Superviser * superviser, Interface * father) :
 {   
     QVBoxLayout *layout = new QVBoxLayout;
 
-    init();
+    auto sources_data = this -> superviser_ -> getSourcesData();
+    auto devices_data = this -> superviser_ -> getDevicesData();
 
-    layout->addWidget(this->formGroupBox_);
-    layout->addWidget(this->buttonsHolder_);
+    this -> tables_ = new Tables(sources_data, devices_data);
 
-    this->setLayout(layout);
-}
+    back_       = new QPushButton(tr("back"));
+    reboot_     = new QPushButton(tr("reboot"));
+    run_        = new QPushButton(tr("run"));
 
-void Auto::init() {
-    this->initializeButtons();
-    this->initializeForm();
-}
-
-
-
-void Auto::initializeButtons() {
     this->buttonsHolder_ = new QWidget;
-    QHBoxLayout *layout = new QHBoxLayout;
 
-    back_ = new QPushButton(tr("back"));
-    layout->addWidget(back_);
+    QHBoxLayout *bLayout = new QHBoxLayout;
 
-    reboot_ = new QPushButton(tr("reboot"));
-    layout->addWidget(reboot_);
-
-    run_ = new QPushButton(tr("run"));
-    layout->addWidget(run_);
-
+    bLayout->addWidget(back_);
+    bLayout->addWidget(reboot_);
+    bLayout->addWidget(run_);
 
     connect(this->back_,
         &QPushButton::clicked, this, &Auto::__BACK__);
@@ -44,25 +32,12 @@ void Auto::initializeButtons() {
     connect(this->run_,
         &QPushButton::clicked, this, &Auto::__RUN__);
 
-    buttonsHolder_->setLayout(layout);
-}
+    buttonsHolder_->setLayout(bLayout);
 
+    layout -> addWidget(buttonsHolder_);
+    layout -> addWidget(tables_);
 
-void Auto::initializeForm() {
-    this->formGroupBox_= new QWidget;
-    QFormLayout *layout = new QFormLayout;
-
-    prob_       = new QLabel();
-    wait_       = new QLabel();
-    device_     = new QLabel();
-    system_     = new QLabel();
-
-    layout->addRow(prob_);
-    layout->addRow(wait_);
-    layout->addRow(device_);
-    layout->addRow(system_);
-
-    formGroupBox_->setLayout(layout);
+    this -> setLayout(layout);
 }
 
 void Auto::__RUN__() {
@@ -70,7 +45,28 @@ void Auto::__RUN__() {
     {
         this -> superviser_ -> run();
     }
-    this -> superviser_ -> print();
+
+    auto sources_data = this -> superviser_ -> getSourcesData();
+    auto devices_data = this -> superviser_ -> getDevicesData();
+    
+    auto temp = this -> tables_;
+
+    this -> tables_ = new Tables(sources_data, devices_data);
+
+    this ->layout()->addWidget(this->tables_);
+
+    delete temp;  
+
+    // for (int i = 0; i < sources_data.size(); i++)
+    // {
+    //     std::cout << "-------------------"      << std::endl;
+    //     std::cout << "Source:            "      << sources_data.at(i).source    << std::endl;
+    //     std::cout << "Created:           "      << sources_data.at(i).created   << std::endl;
+    //     std::cout << "Failled:           "      << sources_data.at(i).failled   << std::endl;
+    //     std::cout << "Average wait:      "      << sources_data.at(i).await     << std::endl;
+    //     std::cout << "Average on device: "      << sources_data.at(i).adevice   << std::endl;
+    //     std::cout << "-------------------"      << std::endl;
+    // }
 }
 
 void Auto::__BACK__() {

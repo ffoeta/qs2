@@ -6,13 +6,15 @@
 #include <QGridLayout>
 #include <QLabel>
 #include <QPushButton>
-#include "Interface.hpp"
+#include "Tables.hpp"
 
 #include <iostream>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QFormLayout>
 
+#include "Interface.hpp"
+#include "Tables.hpp"
 #include "../backend/Superviser.hpp"
 
 class Auto : public QWidget
@@ -23,24 +25,15 @@ private:
 
     Superviser * superviser_;
 
+    Tables * tables_;
+
     Interface * FATHER;
-
-    void init();
-
-    void initializeForm();
-    void initializeButtons();
 
     void __RUN__();
     void __REBOOT__();
     void __BACK__();
 
-    QWidget * buttonsHolder_;
-    QWidget * formGroupBox_;
-    
-    QLabel  * prob_;
-    QLabel  * wait_;
-    QLabel  * device_;
-    QLabel  * system_;
+    QWidget *   buttonsHolder_;
 
     QPushButton *run_;
     QPushButton *reboot_;

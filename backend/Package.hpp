@@ -14,6 +14,16 @@ public:
     float left_;
 };
 
+struct Result
+{
+public:
+    int source;
+    int created;
+    int failled;
+    float await;
+    float adevice;
+};
+
 
 
 

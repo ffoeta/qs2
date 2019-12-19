@@ -34,18 +34,14 @@ Manual::Manual(Superviser * superviser, Interface * father) :
     this->setLayout(layout);
 }
 
-void Manual::foo()
-{
-
-}
-
 void Manual::__RUN__()
 {
     this -> superviser_ -> run();
 
     auto temp = this -> slide_;
     this -> slide_ = new Slide( this -> superviser_ -> getSource(), 
-                                this -> superviser_ -> getBuffer(), this -> superviser_ -> getDevice());
+                                this -> superviser_ -> getBuffer(), 
+                                this -> superviser_ -> getDevice());
     this -> slide_ -> setFixedSize(620,320);
 
     this ->layout()->addWidget(this->slide_);

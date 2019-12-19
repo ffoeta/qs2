@@ -34,7 +34,8 @@ public:
     std::vector<float>  getDeviceTime();
     std::vector<int>    getFaillCount();
 
-    void print();
+    std::vector<Result> getSourcesData();
+    std::vector<Result> getDevicesData();
 
 private:
     Sources * sources_;

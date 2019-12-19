@@ -185,17 +185,23 @@ int Superviser::getDeviceN()
     return this -> n_of_devices_;
 }
 
-void Superviser::print()
+
+
+std::vector<Result> Superviser::getSourcesData()
 {
+    std::vector<Result> res;
     for (int i = 0; i < n_of_sources_; i++)
     {
-        std::cout << "-------------------"      << std::endl;
-        std::cout <<  "Source: "                << i << std::endl;
-        std::cout << "Created: "                << this -> created_per_source_.at(i) << std::endl;
-        std::cout << "Failled: "                << this -> failled_per_source_.at(i) << std::endl;
-        std::cout << "Ratio: "                  << (float)this -> failled_per_source_.at(i)/created_per_source_.at(i) << std::endl;
-        std::cout << "Average wait: "           << this -> wait_time_.at(i)/this -> created_per_source_.at(i) << std::endl;
-        std::cout << "Average device time: "    << this -> dev_time_.at(i)/this->created_per_source_.at(i) << std::endl;
-        std::cout << "-------------------"      << std::endl;
+        res.push_back({i, created_per_source_.at(i), failled_per_source_.at(i), 
+                    this -> wait_time_.at(i)/this -> created_per_source_.at(i),
+                    this -> dev_time_.at(i)/this->created_per_source_.at(i)
+        });
     }
+    return res;
+}
+
+std::vector<Result> Superviser::getDevicesData()
+{
+    std::vector<Result> res;
+    return res;
 }

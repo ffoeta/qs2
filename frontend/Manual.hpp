@@ -33,8 +33,6 @@ private:
     void __REBOOT__();
     void __BACK__();
 
-    void foo();
-
     QPushButton *run_;
     QPushButton *back_;
     QPushButton *reboot_;

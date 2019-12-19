@@ -87,7 +87,7 @@ void Slide::presentSources()
             std::cout << this -> sources_.events.at(sources_.size()-1) << std::endl;
             painter.drawText(TOP_LEFT_X + 45, TOP_LEFT_Y + 210 + 45 + delta,  temp);
         }
-    } 
+    }
     else
     {
         delta = 70;
