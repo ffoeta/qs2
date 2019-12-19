@@ -22,11 +22,15 @@ private:
 
     Interface * FATHER;
 
+    Draw * draw_;
+
     Superviser * superviser_;
 
     void __RUN__();
     void __REBOOT__();
     void __BACK__();
+
+    void feed(std::vector<int> sources, std::vector<int> buffers, std::vector<int> devices);
 
     QPushButton *run_;
     QPushButton *back_;

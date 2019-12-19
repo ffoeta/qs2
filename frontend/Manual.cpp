@@ -4,6 +4,9 @@
 Manual::Manual(Superviser * superviser, Interface * father) :
     FATHER(father), superviser_(superviser)
 {
+    this -> draw_ = new Draw(this -> superviser_ -> getSource().size(),
+                             this -> superviser_ -> getBuffer().size(),
+                             this -> superviser_ -> getDevice().size());
 
     this->run_ = new QPushButton(tr("PRESS ME"));
     this->reboot_ = new QPushButton(tr("REBOOT"));
@@ -27,9 +30,17 @@ Manual::Manual(Superviser * superviser, Interface * father) :
     this->setLayout(layout);
 }
 
+void Manual::feed(std::vector<int> sources, std::vector<int> buffers, std::vector<int> devices)
+{
+
+}
+
 void Manual::__RUN__()
 {   
     this -> superviser_ -> run();
+    this -> superviser_ -> getSource();
+    this -> superviser_ -> getBuffer();
+    this -> superviser_ -> getDevice();
 }
 
 void Manual::__REBOOT__()
