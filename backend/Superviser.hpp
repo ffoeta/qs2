@@ -13,6 +13,7 @@ public:
     Superviser();
 
     void set(int n_of_sources, int n_of_buffers, int n_of_devices, int max_packages, float a, float b, float l);
+    void set(int n_of_sources, int n_of_buffers, int n_of_devices);
     void reboot();
     void run();
 
@@ -21,9 +22,13 @@ public:
     void createdPackage(int n) override;
     bool over() override;
 
-    std::vector<int> getSource();
-    std::vector<int> getBuffer();
-    std::vector<int> getDevice();
+    Picture getSource();
+    Picture getBuffer();
+    Picture getDevice();
+
+    int getSourceN();
+    int getBufferN();
+    int getDeviceN();
 
     std::vector<float>  getWaitTime();
     std::vector<float>  getDeviceTime();

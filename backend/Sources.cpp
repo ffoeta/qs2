@@ -80,13 +80,13 @@ float Sources::nextEvent()
 };
 
 
-std::vector<int> Sources::state()
+Picture Sources::state()
 {
-    std::vector<int> res;
+    Picture res;
 
     for (auto it = sources_.begin(); it != sources_.end(); it++ )
     {
-        res.push_back(it -> getN());
+        res.add(it -> nextEvent(), it -> getN());
     }
 
     return res;

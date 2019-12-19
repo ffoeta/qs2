@@ -4,9 +4,12 @@
 Manual::Manual(Superviser * superviser, Interface * father) :
     FATHER(father), superviser_(superviser)
 {
-    this -> draw_ = new Draw(this -> superviser_ -> getSource().size(),
-                             this -> superviser_ -> getBuffer().size(),
-                             this -> superviser_ -> getDevice().size());
+    Picture ns = this -> superviser_ -> getSource();
+    Picture nb = this -> superviser_ -> getBuffer();
+    Picture nd = this -> superviser_ -> getDevice();
+
+    this -> slide_ = new Slide(ns, nb, nd);
+    this -> slide_ -> setFixedSize(620,320);
 
     this->run_ = new QPushButton(tr("PRESS ME"));
     this->reboot_ = new QPushButton(tr("REBOOT"));
@@ -17,6 +20,7 @@ Manual::Manual(Superviser * superviser, Interface * father) :
     layout->addWidget(this->run_);
     layout->addWidget(this->reboot_);
     layout->addWidget(this->back_);
+    layout->addWidget(this->slide_);
 
     connect(this->run_,
             &QPushButton::clicked, this, &Manual::__RUN__);
@@ -30,17 +34,23 @@ Manual::Manual(Superviser * superviser, Interface * father) :
     this->setLayout(layout);
 }
 
-void Manual::feed(std::vector<int> sources, std::vector<int> buffers, std::vector<int> devices)
+void Manual::foo()
 {
 
 }
 
 void Manual::__RUN__()
-{   
+{
     this -> superviser_ -> run();
-    this -> superviser_ -> getSource();
-    this -> superviser_ -> getBuffer();
-    this -> superviser_ -> getDevice();
+
+    auto temp = this -> slide_;
+    this -> slide_ = new Slide( this -> superviser_ -> getSource(), 
+                                this -> superviser_ -> getBuffer(), this -> superviser_ -> getDevice());
+    this -> slide_ -> setFixedSize(620,320);
+
+    this ->layout()->addWidget(this->slide_);
+
+    delete temp;
 }
 
 void Manual::__REBOOT__()

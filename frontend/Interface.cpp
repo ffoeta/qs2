@@ -26,7 +26,7 @@ Interface::Interface()
     stackedWidget_->addWidget(settingsWidget_);
 
     //выбираем текущий
-    this -> stackedWidget_ ->setCurrentWidget(mainMenuWidget_);
+    this -> __MENU__();
 
     QVBoxLayout *layout = new QVBoxLayout;
     layout->addWidget(stackedWidget_);
@@ -35,6 +35,8 @@ Interface::Interface()
 
 void Interface::__MANUAL__()
 {
+    this -> manualWidget_ = new Manual(superviser_, this);
+    stackedWidget_->addWidget(manualWidget_);
     this -> stackedWidget_ -> setCurrentWidget(manualWidget_);
 }
 
@@ -45,6 +47,8 @@ void Interface::__MENU__()
 
 void Interface::__AUTO__() 
 {
+    this -> autoWidget_ = new Auto(superviser_, this);
+    stackedWidget_->addWidget(autoWidget_);
     this -> stackedWidget_ -> setCurrentWidget(autoWidget_);
 }
 

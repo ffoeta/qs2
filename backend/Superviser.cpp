@@ -47,6 +47,39 @@ void Superviser::set(int n_of_sources, int n_of_buffers, int n_of_devices, int m
     this -> devices_        = new Devices(this, n_of_devices,buffers_,l);
 }
 
+void Superviser::set(int n_of_sources, int n_of_buffers, int n_of_devices)
+{
+    this -> n_of_sources_   = n_of_sources;
+    this -> n_of_buffers_   = n_of_buffers;
+    this -> n_of_devices_   = n_of_devices;
+
+    this -> total_count_    = 0;
+    this -> faill_          = 0;
+
+    this -> wait_time_              .clear();
+    this -> dev_time_               .clear();
+    this -> failled_per_source_     .clear();
+    this -> finished_per_source_    .clear();
+    this -> created_per_source_     .clear();
+
+    for (size_t i = 0; i < n_of_sources_; i++)
+    {
+        this -> wait_time_.push_back(0);
+        this -> dev_time_.push_back(0);
+        this -> failled_per_source_.push_back(0);
+        this -> finished_per_source_.push_back(0);
+        this -> created_per_source_.push_back(0);
+    }
+
+    this -> source_event_   = 0;
+    this -> device_event_   = 0;
+
+    this -> buffers_        = new Buffers(this, n_of_buffers);
+    this -> sources_        = new Sources(this, n_of_sources,buffers_,this -> a_, this -> b_);
+    this -> devices_        = new Devices(this, n_of_devices,buffers_,this -> l_);
+}
+
+
 void Superviser::reboot()
 {
     if (this -> sources_ != nullptr)
@@ -121,19 +154,35 @@ bool Superviser::over()
     return this -> total_count_ > max_packages_;
 }
 
-std::vector<int> Superviser::getSource() 
+Picture Superviser::getSource() 
 {
     return this -> sources_ -> state();
 }
 
-std::vector<int> Superviser::getBuffer()
+Picture Superviser::getBuffer()
 {
     return this -> buffers_ -> state();
 }
 
-std::vector<int> Superviser::getDevice()
+Picture Superviser::getDevice()
 {
     return this -> devices_ -> state();
+}
+
+
+int Superviser::getSourceN()
+{
+    return this -> n_of_sources_;
+}
+
+int Superviser::getBufferN()
+{
+    return this -> n_of_buffers_;
+}
+
+int Superviser::getDeviceN()
+{
+    return this -> n_of_devices_;
 }
 
 void Superviser::print()

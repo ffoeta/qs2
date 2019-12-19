@@ -135,18 +135,16 @@ bool Buffers::ready()
     return false;
 }
 
-std::vector<int> Buffers::state()
+Picture Buffers::state()
 {
-    std::vector<int> res;
+    Picture res;
 
     for (auto it = buffers_.begin(); it != buffers_.end(); it++ )
     {
-        if (it -> empty())
+        if (it -> package() != nullptr)
         {
-            res.push_back(-1);
-            continue;
+            res.add(it ->package() ->created_at_, it -> getN());
         }
-        res.push_back(it -> getN());
     }
 
     return res;

@@ -2,6 +2,7 @@
 #define BUFFERS_HPP
 
 #include "Package.hpp"
+#include "Picture.hpp"
 #include "Base.hpp"
 #include <vector>
 #include <iostream>
@@ -44,7 +45,7 @@ public:
     //  есть ли в буфере заявки
     bool ready();
     //  заявки в буферах
-    std::vector<int> state();
+    Picture state();
     //  получить время
     void getTime(float time);
 private:

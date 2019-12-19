@@ -9,6 +9,7 @@ MainMenu::MainMenu(Interface * father) :
     layout->addWidget(this->buttonsHolder_);
 
     this->setLayout(layout);
+
 }
 
 void MainMenu::init()

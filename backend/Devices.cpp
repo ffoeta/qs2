@@ -125,18 +125,16 @@ float Devices::nextEvent()
 
 
 //вернуть все что лежит на устройстве
-std::vector<int> Devices::state()
+Picture Devices::state()
 {
-    std::vector<int> res;
+    Picture res;
 
     for (auto it = devices_.begin(); it != devices_.end(); it++ )
     {
-        if (it -> empty())
+        if (!it -> empty())
         {
-            res.push_back(-1);
-            continue;
+            res.add(it -> nextEvent(), it -> getN());
         }
-        res.push_back(it -> getN());
     }
 
     return res;

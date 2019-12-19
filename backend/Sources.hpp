@@ -3,6 +3,7 @@
 
 #include "Buffers.hpp"
 #include "Package.hpp"
+#include "Picture.hpp"
 #include "Base.hpp"
 #include <vector>
 
@@ -38,7 +39,7 @@ public:
     //  следующее событие
     float nextEvent();
     //  снимок состояния
-    std::vector<int> state();
+    Picture state();
     //создать пакет
     Package * package();
     //  номер источника

@@ -3,6 +3,7 @@
 
 #include "Buffers.hpp"
 #include "Package.hpp"
+#include "Picture.hpp"
 
 #include "Base.hpp"
 #include <vector>
@@ -46,7 +47,7 @@ public:
     //  выбрать следующее событие
     float nextEvent();
     //  вернуть заявки на утройствах
-    std::vector<int> state();
+    Picture state();
     //  управление
     void inc();
     void dec();
