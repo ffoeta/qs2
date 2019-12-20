@@ -26,6 +26,8 @@ public:
     Picture getBuffer();
     Picture getDevice();
 
+    float getTime();
+
     int getSourceN();
     int getBufferN();
     int getDeviceN();
@@ -46,6 +48,7 @@ private:
     int faill_;
 
     std::vector<float>  wait_time_;
+
     std::vector<float>  dev_time_;
 
     std::vector<int>    finished_per_source_;
@@ -53,6 +56,12 @@ private:
     std::vector<int>    created_per_source_;
 
     std::vector<int>    failled_per_source_;
+
+    std::vector<float>  sqr_wait_time_;
+    
+    std::vector<float>  sqr_device_time_;
+
+    std::vector<float>  device_total_time_;
 
     int n_of_sources_;
     int n_of_buffers_;

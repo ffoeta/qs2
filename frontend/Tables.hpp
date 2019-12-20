@@ -8,8 +8,9 @@
 class Tables : public QWidget
 {
 public:
-    Tables(std::vector<Result> sources, std::vector<Result> devices);
+    Tables(std::vector<Result> sources, std::vector<Result> devices, float time);
 private:
+    float time_;
     std::vector<Result> sources_; 
     std::vector<Result> devices_;
 

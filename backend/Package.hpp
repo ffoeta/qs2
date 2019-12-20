@@ -7,6 +7,7 @@ public:
     Package(int n_of_source, int serial_number, float created_at);
 
     int n_of_source_;
+    int n_of_device_;
     int serial_number_;
 
     float created_at_;
@@ -22,6 +23,10 @@ public:
     int failled;
     float await;
     float adevice;
+    float dispW;
+    float dispD;
+    float ratio;
+    float total_device;
 };
 
 

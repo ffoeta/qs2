@@ -8,8 +8,9 @@ Auto::Auto(Superviser * superviser, Interface * father) :
 
     auto sources_data = this -> superviser_ -> getSourcesData();
     auto devices_data = this -> superviser_ -> getDevicesData();
+    auto time = this -> superviser_ -> getTime();
 
-    this -> tables_ = new Tables(sources_data, devices_data);
+    this -> tables_ = new Tables(sources_data, devices_data, time);
 
     back_       = new QPushButton(tr("back"));
     reboot_     = new QPushButton(tr("reboot"));
@@ -46,27 +47,17 @@ void Auto::__RUN__() {
         this -> superviser_ -> run();
     }
 
-    auto sources_data = this -> superviser_ -> getSourcesData();
-    auto devices_data = this -> superviser_ -> getDevicesData();
+    auto sources_data   = this -> superviser_ -> getSourcesData();
+    auto devices_data   = this -> superviser_ -> getDevicesData();
+    auto time           = this -> superviser_ -> getTime();
     
     auto temp = this -> tables_;
 
-    this -> tables_ = new Tables(sources_data, devices_data);
+    this -> tables_ = new Tables(sources_data, devices_data, time);
 
     this ->layout()->addWidget(this->tables_);
 
     delete temp;  
-
-    // for (int i = 0; i < sources_data.size(); i++)
-    // {
-    //     std::cout << "-------------------"      << std::endl;
-    //     std::cout << "Source:            "      << sources_data.at(i).source    << std::endl;
-    //     std::cout << "Created:           "      << sources_data.at(i).created   << std::endl;
-    //     std::cout << "Failled:           "      << sources_data.at(i).failled   << std::endl;
-    //     std::cout << "Average wait:      "      << sources_data.at(i).await     << std::endl;
-    //     std::cout << "Average on device: "      << sources_data.at(i).adevice   << std::endl;
-    //     std::cout << "-------------------"      << std::endl;
-    // }
 }
 
 void Auto::__BACK__() {

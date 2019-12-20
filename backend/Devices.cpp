@@ -89,6 +89,7 @@ void Devices::takePackage(Package * package)
         inc();
     } while (!devices_.at(current_).empty());
 
+    package -> n_of_device_ = current_;
     devices_.at(current_).takePackage(package);
     inc();
 };

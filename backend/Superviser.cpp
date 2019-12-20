@@ -25,6 +25,9 @@ void Superviser::set(int n_of_sources, int n_of_buffers, int n_of_devices, int m
     this -> finished_per_source_    .clear();
     this -> created_per_source_     .clear();
 
+    this ->sqr_wait_time_           .clear();
+    this ->sqr_device_time_         .clear();
+
     for (size_t i = 0; i < n_of_sources_; i++)
     {
         this -> wait_time_.push_back(0);
@@ -32,7 +35,16 @@ void Superviser::set(int n_of_sources, int n_of_buffers, int n_of_devices, int m
         this -> failled_per_source_.push_back(0);
         this -> finished_per_source_.push_back(0);
         this -> created_per_source_.push_back(0);
+
+        this -> sqr_device_time_.push_back(0);
+        this -> sqr_wait_time_.push_back(0);
     }
+
+    for (size_t i = 0; i < n_of_devices; i++)
+    {
+        this -> device_total_time_.push_back(0);
+    }
+    
 
     this -> max_packages_   = max_packages;
     this -> a_ = a;
@@ -61,6 +73,9 @@ void Superviser::set(int n_of_sources, int n_of_buffers, int n_of_devices)
     this -> failled_per_source_     .clear();
     this -> finished_per_source_    .clear();
     this -> created_per_source_     .clear();
+
+    this ->sqr_wait_time_           .clear();
+    this ->sqr_device_time_         .clear();
 
     for (size_t i = 0; i < n_of_sources_; i++)
     {
@@ -137,9 +152,15 @@ void Superviser::addPackage(Package * package)
 {
     this -> finished_per_source_.at(package->n_of_source_)++;
 
-    this -> wait_time_.at(package->n_of_source_)            += (package->on_device_ - package->created_at_);
-    this -> dev_time_.at(package->n_of_source_)             += (package->left_ - package->on_device_);
-    
+    this -> wait_time_.at(package->n_of_source_)        += (package->on_device_ - package -> created_at_);
+    this -> dev_time_.at(package->n_of_source_)         += (package->left_ - package -> on_device_);
+
+    this -> sqr_wait_time_.at(package->n_of_source_)    += 
+        (package -> on_device_ - package ->created_at_) * (package -> on_device_ - package ->created_at_);
+    this -> sqr_device_time_.at(package->n_of_source_)  +=
+        (package -> left_ - package -> on_device_) * (package -> left_ - package -> on_device_);
+
+    this -> device_total_time_.at(package->n_of_device_) += (package ->left_ - package ->on_device_);   
 }
 
 void Superviser::droppPackage(Package * package)
@@ -169,6 +190,10 @@ Picture Superviser::getDevice()
     return this -> devices_ -> state();
 }
 
+float Superviser::getTime() 
+{
+    return this->device_event_>source_event_?device_event_:source_event_;
+}
 
 int Superviser::getSourceN()
 {
@@ -192,9 +217,17 @@ std::vector<Result> Superviser::getSourcesData()
     std::vector<Result> res;
     for (int i = 0; i < n_of_sources_; i++)
     {
-        res.push_back({i, created_per_source_.at(i), failled_per_source_.at(i), 
-                    this -> wait_time_.at(i)/this -> created_per_source_.at(i),
-                    this -> dev_time_.at(i)/this->created_per_source_.at(i)
+        res.push_back({ i, 
+                        created_per_source_.at(i), 
+                        failled_per_source_.at(i), 
+                        this -> wait_time_.at(i)/this -> created_per_source_.at(i),
+                        this -> dev_time_.at(i)/this->created_per_source_.at(i),
+                        this -> sqr_wait_time_.at(i)/created_per_source_.at(i) - this -> wait_time_.at(i) * this -> wait_time_.at(i)/ 
+                            (created_per_source_.at(i) * created_per_source_.at(i)),
+                        this -> sqr_device_time_.at(i)/created_per_source_.at(i) - this -> dev_time_.at(i) * this -> dev_time_.at(i)/
+                            (created_per_source_.at(i) * created_per_source_.at(i)),
+                        (float) failled_per_source_.at(i) / created_per_source_.at(i) * 100,
+                        0
         });
     }
     return res;
@@ -203,5 +236,11 @@ std::vector<Result> Superviser::getSourcesData()
 std::vector<Result> Superviser::getDevicesData()
 {
     std::vector<Result> res;
+    for (int i = 0; i < n_of_devices_; i++)
+    {
+        res.push_back({0,0,0,0,0,0,0,0,
+            this -> device_total_time_.at(i)
+        });
+    }
     return res;
 }
