@@ -40,7 +40,10 @@ public:
     Buffers(Base * superviser, int n_of_buffers);
     //  положить заявку
     void recivePackage(Package * package);
-    // отдать заявку
+    //  найдена дыра в i
+    //  ее нужно устранить,
+    void load(Package * package, int i);
+    //  отдать заявку
     Package * sendPackage();
     //  есть ли в буфере заявки
     bool ready();
@@ -53,11 +56,8 @@ private:
     float time_;
     //  смотритель
     Base * superviser_;
-    //  текущий элемент
-    int current_;
-    //  управление
-    void inc();
-    void dec();
+    //  последний пришедший
+    int last_;
     //  кол-во буферов
     int n_of_buffers_;
     //  буферы

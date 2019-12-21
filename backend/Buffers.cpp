@@ -38,7 +38,7 @@ int Buffer::getN()
 
 
 Buffers::Buffers(Base * superviser, int n_of_buffers) : 
-    superviser_(superviser), n_of_buffers_(n_of_buffers), current_(0)
+    superviser_(superviser), n_of_buffers_(n_of_buffers), last_(-1)
 {
     for (int i = 0; i < n_of_buffers_; i++)
     {
@@ -47,52 +47,30 @@ Buffers::Buffers(Base * superviser, int n_of_buffers) :
     }
 };
 
-void Buffers::inc() 
-{
-	if (current_ + 1 == n_of_buffers_)
-	{
-		current_ = 0;
-	} else 
-	{
-		current_++;
-	}
-};
-
-void Buffers::dec() 
-{
-	if (current_ - 1 < 0) 
-	{
-		current_ = n_of_buffers_-1;
-	} else
-	{
-		current_--;
-	}
-}
-
 void Buffers::getTime(float time)
 {
     this -> time_ = time;
 }
 
-
+//принять и расположить в ожидании
 void Buffers::recivePackage(Package * package)
 {
-    auto temp = this -> current_;
-    do
+    if (this -> buffers_.at(n_of_buffers_-1).empty())
     {
-        inc();
-    } while ((!buffers_.at(current_).empty()) && (current_ != temp));
-
-    if (current_ == temp)
-    {
-        if (!buffers_.at(current_).empty())
+        for (int i = 0; i < this -> n_of_buffers_; i++)
         {
-            this -> superviser_ -> droppPackage(buffers_.at(current_).sendPackage());
+            if (this -> buffers_.at(i).empty())
+            {
+                this -> buffers_.at(i).recievePackage(package);
+                break;
+            }
         }
     }
-
-    buffers_.at(current_).recievePackage(package);
-    inc();
+    else
+    {
+        this -> superviser_ ->droppPackage(this -> buffers_.at(this -> n_of_buffers_ - 1).sendPackage());
+        this -> buffers_.at(this -> n_of_buffers_ - 1).recievePackage(package);
+    }
 }
     
 Package * Buffers::sendPackage()
@@ -109,19 +87,26 @@ Package * Buffers::sendPackage()
         }
     }
 
-    do
-    {
-        inc();
-    } while (buffers_.at(current_).getN()  != n_of_source);
 
-    auto temp = this -> buffers_.at(current_).sendPackage();
+    int k = 0;
+
+    for (auto it = this -> buffers_.begin(); it != this -> buffers_.end(); it++)
+    {
+        if (it -> getN() == n_of_source)
+        {
+            break;
+        }
+        k++;
+    }
+
+    auto temp = this -> buffers_.at(k).sendPackage();
     temp -> on_device_ = this -> time_;
-    
-    inc();
+
+    this -> buffers_.erase(this -> buffers_.begin() + k);
+    buffers_.push_back(*(new Buffer()));
+
     return temp;
 }
-
-
 
 bool Buffers::ready() 
 {

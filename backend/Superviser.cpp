@@ -25,8 +25,9 @@ void Superviser::set(int n_of_sources, int n_of_buffers, int n_of_devices, int m
     this -> finished_per_source_    .clear();
     this -> created_per_source_     .clear();
 
-    this ->sqr_wait_time_           .clear();
-    this ->sqr_device_time_         .clear();
+    this -> sqr_wait_time_           .clear();
+    this -> sqr_device_time_         .clear();
+    this -> device_total_time_       .clear();
 
     for (size_t i = 0; i < n_of_sources_; i++)
     {
@@ -74,8 +75,9 @@ void Superviser::set(int n_of_sources, int n_of_buffers, int n_of_devices)
     this -> finished_per_source_    .clear();
     this -> created_per_source_     .clear();
 
-    this ->sqr_wait_time_           .clear();
-    this ->sqr_device_time_         .clear();
+    this -> sqr_wait_time_           .clear();
+    this -> sqr_device_time_         .clear();
+    this -> device_total_time_       .clear();
 
     for (size_t i = 0; i < n_of_sources_; i++)
     {
@@ -85,6 +87,7 @@ void Superviser::set(int n_of_sources, int n_of_buffers, int n_of_devices)
         this -> finished_per_source_.push_back(0);
         this -> created_per_source_.push_back(0);
     }
+
 
     this -> source_event_   = 0;
     this -> device_event_   = 0;
